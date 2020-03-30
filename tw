@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+
+cp $DIR/custom.cls $PWD
+cp template.tex $PWD/$1.tex
+
+case $1 in
+    new-section) ;;
+    init) ;;
+esac
