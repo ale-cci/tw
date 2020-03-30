@@ -1,10 +1,30 @@
 #!/usr/bin/env sh
+usage() {
+    echo "tw [init|new-section] NAME"
+}
+
+[ -z "$2" ] && usage && exit 1
+
+
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
-cp $DIR/custom.cls $PWD
-cp template.tex $PWD/$1.tex
+
+# TODO: Take as params and sed the tex file
+AUTHOR=$USER
+TITLE=""
+# Replace section name and title
+
 
 case $1 in
-    new-section) ;;
-    init) ;;
+    new-section)
+        mkdir $PWD/subfiles/
+        cp -i $DIR/subfiles/subtemplate.tex $PWD/subfiles/"$2".tex
+        ;;
+    init)
+        cp -i $DIR/custom.cls $PWD
+        cp -i $DIR/template.tex $PWD/"$2".tex
+        ;;
+    *)
+        usage
+        exit 1
 esac
