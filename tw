@@ -17,7 +17,7 @@ TITLE=""
 
 case $1 in
     new-section)
-        mkdir $PWD/subfiles/
+        mkdir -p $PWD/subfiles/
         cp -i $DIR/subfiles/subtemplate.tex $PWD/subfiles/"$2".tex
         ;;
 

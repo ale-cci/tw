@@ -95,6 +95,13 @@
     \end{center}
 }
 
+% No numbers in subsubsections
+\titleformat{\subsubsection}
+    {\color{black}\bfseries\normalsize}
+    {}
+    {0em}
+    {}
+
 % Hide section numbers in table of contents
 \makeatletter
 \let\latexl@section\l@section
