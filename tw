@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 usage() {
-    echo "tw [init|new-section] NAME"
+    echo "tw [init|new-section|update-cls] NAME"
 }
 
 [ -z "$2" ] && usage && exit 1
@@ -20,10 +20,16 @@ case $1 in
         mkdir $PWD/subfiles/
         cp -i $DIR/subfiles/subtemplate.tex $PWD/subfiles/"$2".tex
         ;;
+
     init)
         cp -i $DIR/custom.cls $PWD
         cp -i $DIR/template.tex $PWD/"$2".tex
         ;;
+
+    update-cls)
+        cp -i "$2" $DIR/custom.cls
+        ;;
+
     *)
         usage
         exit 1
