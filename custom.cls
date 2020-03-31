@@ -42,7 +42,7 @@
 
 % show colorbox under code words used in paragraphs
 \let\oldlstinline\lstinline
-\renewcommand{\lstinline}[1]{\colorbox{code-bg}{\oldlstinline{#1}}}
+\renewcommand{\lstinline}[1]{\colorbox{clr-code-bg}{\oldlstinline{#1}}}
 
 % First page big format
 \makeatletter
@@ -106,4 +106,10 @@
 \makeatletter
 \let\latexl@section\l@section
 \def\l@section#1#2{\begingroup\let\numberline\@gobble\latexl@section{#1}{#2}\endgroup}
+\makeatother
+
+% Hide subsection number in table of contents
+\makeatletter
+\let\latexl@subsection\l@subsection
+\def\l@subsection#1#2{\begingroup\let\numberline\@gobble\latexl@subsection{#1}{#2}\endgroup}
 \makeatother
