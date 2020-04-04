@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 usage() {
     echo "tw [OPTION] NAME
 Command line utility for create and keeping organized large LaTeX documents.
@@ -7,6 +8,7 @@ OPTION
     init                Copy default template and style to current directory.
     new-section         Create new subsection file in subfiles/NAME.tex
     update-cls          Change the default 'custom.cls' style file.
+    latest-section      View or Edit the latest saved section.
    "
 }
 
@@ -46,6 +48,16 @@ case $1 in
         cp -i "$2" $TW_DIR/custom.cls
         ;;
 
+    latest-section)
+        [ ! -d "subfiles" ] && echo "Unable to find 'subfiles' directory" && exit 1
+        LATEST_EDIT=$(ls -t1 subfiles/*.tex | head -n1)
+
+        case "$2" in
+            open|edit) $EDITOR $LATEST_EDIT;;
+            name|print|view) echo $LATEST_EDIT;;
+            *) echo "Only [edit|view] are allowed."
+        esac
+        ;;
     *)
         usage
         exit 1
