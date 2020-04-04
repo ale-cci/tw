@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
+
 set -e
+
+#### Functions
 usage() {
     echo "tw [OPTION] NAME
 Command line utility for create and keeping organized large LaTeX documents.
@@ -19,19 +22,32 @@ OPTION
 TW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 
-# Custom configs
+#### Custom configs
+
 AUTHOR=$USER    # Default author name
 TITLE="$2"      # Default section/file title
 FILENAME=$(echo "$2" | sed -e 's/\(.*\)/\L\1/g' -e 's/\s\+/_/g') # 'Test Title' => 'test_title'
+
+
+#### Parameter parsing
 
 case $1 in
     new-section)
         mkdir -p $PWD/subfiles/
         cp -i $TW_DIR/subfiles/subtemplate.tex $PWD/subfiles/$FILENAME.tex
 
+        set +e
+        # Find file that contains [nextsection]
+        MAINFILE="$(grep -l "\[nextsection\]" *.tex)"
+
         # Set custom section title  (TODO: Assure no / in $2)
-        sed -i "s/First Section/$2/" $PWD/subfiles/$FILENAME.tex
-        echo "Done. remember to add '\\subfile{subfiles/$FILENAME}' to your main .tex file"
+        sed -i "s/First Section/$2/" "$PWD/subfiles/$FILENAME.tex"
+
+        # Add automatically \subfile{subfiles/$FILENAME} before %[nextsection] if MAINFILE != ""
+        [ -z $MAINFILE ]\
+            && echo "Done. remember to add '\\subfile{subfiles/$FILENAME}' to your main .tex file"\
+            || (sed -i "s/%^.*\[nextsection\]/\\\\subfile\{subfiles\/$FILENAME\}\n%\[nextsection\]/" $MAINFILE\
+                && echo "Done. Section appended in $MAINFILE.")
         ;;
 
     init)
