@@ -12,24 +12,29 @@
 \RequirePackage{fancyhdr}
 \RequirePackage{tikz}
 \RequirePackage{fontspec}
-\setmainfont{Roboto}
 \RequirePackage{listings}
+
+\setmainfont{Roboto}
 
 % Not required
 \RequirePackage{tcolorbox}
 \RequirePackage{enumitem}
 
 
+% Main colors
 \definecolor{clr-primary}{HTML}{0054A3}
 \definecolor{clr-lightgray}{HTML}{A5ACB2}
 \renewcommand{\familydefault}{\sfdefault}
 
+
+% Code colors
 \colorlet{clr-code-keyword}{clr-primary}
 \colorlet{clr-code-comment}{clr-lightgray}
 \definecolor{clr-code-bg}{HTML}{EFF0F1}
 \definecolor{clr-code-string}{HTML}{992E2E}
 
 
+% listings default style for code
 \lstset{
     language={python},
     breaklines=true,
@@ -42,9 +47,11 @@
     showstringspaces=false
 }
 
+
 % show colorbox under code words used in paragraphs
 \let\oldlstinline\lstinline
 \renewcommand{\lstinline}[1]{\colorbox{clr-code-bg}{\oldlstinline{#1}}}
+
 
 % First page big format
 \makeatletter
@@ -75,6 +82,7 @@
     {}[\color{clr-lightgray}\titlerule]
 \titlespacing{\section}{0em}{0em}{2em}
 
+
 % New page on new section
 \newcommand{\sectionbreak}{\clearpage}
 
@@ -86,6 +94,7 @@
     {0em}
     {}
 
+% Blue-background box for important summary paragraphs
 \newcommand{\warnbox}[1]{
     \begin{center}
     {
