@@ -8,14 +8,16 @@
 \RequirePackage{amsmath}
 \RequirePackage{subfiles}
 \RequirePackage[noindentafter]{titlesec}
-\RequirePackage{listings}
 \RequirePackage{xcolor}
 \RequirePackage{fancyhdr}
 \RequirePackage{tikz}
-\RequirePackage{tcolorbox}
-\RequirePackage{enumitem}
 \RequirePackage{fontspec}
 \setmainfont{Roboto}
+\RequirePackage{listings}
+
+% Not required
+\RequirePackage{tcolorbox}
+\RequirePackage{enumitem}
 
 
 \definecolor{clr-primary}{HTML}{0054A3}

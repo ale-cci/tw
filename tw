@@ -11,14 +11,17 @@ OPTION
     init                Copy default template and style to current directory.
     new-section         Create new subsection file in subfiles/NAME.tex
     update-cls          Change the default 'custom.cls' style file.
-    latest-section      View or Edit the latest saved section.
+    edit                Open in \$EDITOR 'custom.cls', 'template.tex' or 'latest'
+                            modified section
    "
 }
 
+#### Argument check
 [ -z "$2" ] && usage && exit 1
 [ "$3" ] && echo "WARNING: Multiple arguments provided. Maybe you forgot to
 \"quote\" NAME."
 
+# Project directory
 TW_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 
 
@@ -39,6 +42,7 @@ case $1 in
         set +e
         # Find file that contains [nextsection]
         MAINFILE="$(grep -l "\[nextsection\]" *.tex)"
+        set -e
 
         # Set custom section title  (TODO: Assure no / in $2)
         sed -i "s/First Section/$2/" "$PWD/subfiles/$FILENAME.tex"
@@ -64,14 +68,22 @@ case $1 in
         cp -i "$2" $TW_DIR/custom.cls
         ;;
 
-    latest-section)
-        [ ! -d "subfiles" ] && echo "Unable to find 'subfiles' directory" && exit 1
-        LATEST_EDIT=$(ls -t1 subfiles/*.tex | head -n1)
+    edit)
 
         case "$2" in
-            open|edit) $EDITOR $LATEST_EDIT;;
-            name|print|view) echo $LATEST_EDIT;;
-            *) echo "Only [edit|view] are allowed."
+            latest)
+                [ ! -d "subfiles" ] && echo "Unable to find 'subfiles' directory" && exit 1
+                $EDITOR $(ls -t1 subfiles/*.tex | head -n1)
+                ;;
+
+            template.tex|custom.cls)
+                $EDITOR $TW_DIR/$2
+                ;;
+
+            *)
+                echo "Undefined file '$2'"
+                exit 1
+                ;;
         esac
         ;;
     *)
