@@ -50,7 +50,7 @@ case $1 in
         # Add automatically \subfile{subfiles/$FILENAME} before %[nextsection] if MAINFILE != ""
         [ -z $MAINFILE ]\
             && echo "Done. remember to add '\\subfile{subfiles/$FILENAME}' to your main .tex file"\
-            || (sed -i "s/%^.*\[nextsection\]/\\\\subfile\{subfiles\/$FILENAME\}\n%\[nextsection\]/" $MAINFILE\
+            || (sed -i "s/%.*\[nextsection\]/\\\\subfile\{subfiles\/$FILENAME\}\n%\[nextsection\]/" $MAINFILE\
                 && echo "Done. Section appended in $MAINFILE.")
         ;;
 
